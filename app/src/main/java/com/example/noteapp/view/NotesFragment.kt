@@ -1,5 +1,6 @@
 package com.example.noteapp.view
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -48,13 +49,26 @@ class NotesFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
+
         binding.floatingActionButton.setOnClickListener {
             floatingButtonTiklandi(it)
         }
 
         fireStoreVerileriAl()
 
-        adapter = NoteAdapter(noteList)
+
+
+
+        adapter = NoteAdapter(noteList) { noteId ->
+            // Tıklanan notun ID'si ile NoteDetailFragment'a yönlendirme
+            val action =
+                NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(noteId = noteId)
+            Navigation.findNavController(view).navigate(action)
+        }
+
         binding.notesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.notesRecyclerView.adapter = adapter
 
@@ -65,30 +79,33 @@ class NotesFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         val currentUserEmail = auth.currentUser?.email
         db.collection("Notes").whereEqualTo("email", currentUserEmail)
             .orderBy("date", Query.Direction.DESCENDING).addSnapshotListener { value, error ->
-            if (error != null) {
-                Toast.makeText(requireContext(), error.localizedMessage, Toast.LENGTH_LONG).show()
-                println(error.localizedMessage)
-            } else {
-                if (value != null) {
-                    if (!value.isEmpty) {
-                        noteList.clear()
+                if (error != null) {
+                    Toast.makeText(requireContext(), error.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                    println(error.localizedMessage)
+                } else {
+                    if (value != null) {
+                        if (!value.isEmpty) {
+                            noteList.clear()
 
-                        val documents = value.documents
-                        for (document in documents) {
-                            val content = document.get("content") as? String ?: "No content"
-                            val title = document.get("title") as? String ?: "No title"
-                            val email = document.get("email") as? String ?: "Unknown email"
-                            val id = (document.get("id") as? Long)?.toInt() ?: 0
+                            val documents = value.documents
+                            for (document in documents) {
+                                val content = document.get("content") as? String ?: "No content"
+                                val title = document.get("title") as? String ?: "No title"
+                                val email = document.get("email") as? String ?: "Unknown email"
+                                val documentId = document.id
+
+                                //println(documentId)
 
 
-                            val note = Note(title, content, email, id)
-                            noteList.add(note)
+                                val note = Note(title, content, email, documentId)
+                                noteList.add(note)
+                            }
+                            adapter?.notifyDataSetChanged()
                         }
-                        adapter?.notifyDataSetChanged()
                     }
                 }
             }
-        }
     }
 
     fun floatingButtonTiklandi(view: View) {

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_kullaniciFragment_to_notesFragment"
             app:destination="@id/notesFragment" />
+        <action
+            android:id="@+id/action_kullaniciFragment_to_kullaniciKayitFragment"
+            app:destination="@id/kullaniciKayitFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
@@ -34,5 +37,29 @@
         <action
             android:id="@+id/action_notesFragment_to_kullaniciFragment"
             app:destination="@id/kullaniciFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_noteDetailFragment"
+            app:destination="@id/noteDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteDetailFragment"
+        android:name="com.example.noteapp.view.NoteDetailFragment"
+        android:label="fragment_note_detail"
+        tools:layout="@layout/fragment_note_detail" >
+        <action
+            android:id="@+id/action_noteDetailFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+        <argument
+            android:name="noteId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/kullaniciKayitFragment"
+        android:name="com.example.noteapp.view.KullaniciKayitFragment"
+        android:label="fragment_kullanici_kayit"
+        tools:layout="@layout/fragment_kullanici_kayit" >
+        <action
+            android:id="@+id/action_kullaniciKayitFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
     </fragment>
 </navigation>

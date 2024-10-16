@@ -2,73 +2,60 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:background="@color/bg4"
+    android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    tools:context=".view.KullaniciFragment">
-
-
+    tools:context=".view.KullaniciKayitFragment">
 
 
     <EditText
-        android:id="@+id/emailEditText"
+        android:id="@+id/saveEmailEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="120dp"
-        android:fontFamily="@font/poppins"
-        android:background="@drawable/custom_edit_text"
-        android:textSize="18sp"
-        android:padding="12dp"
         android:layout_marginEnd="50dp"
+        android:background="@drawable/custom_edit_text"
         android:ems="10"
+        android:fontFamily="@font/poppins"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordEditText"
+        android:id="@+id/savePasswordEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="32dp"
-        android:padding="12dp"
-        android:background="@drawable/custom_edit_text"
         android:layout_marginEnd="50dp"
+        android:background="@drawable/custom_edit_text"
         android:ems="10"
-        android:textSize="18sp"
         android:fontFamily="@font/poppins"
         android:hint="Password"
         android:inputType="textPassword"
+        android:padding="12dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/saveEmailEditText" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:textSize="16sp"
-        android:padding="10dp"
-        android:text="Login"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/poppins"
+        android:text="Sign Up"
         android:textColor="@color/black"
-        android:fontFamily="@font/poppins"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
-
-    <TextView
-        android:id="@+id/signUpText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/poppins"
-        android:textSize="14sp"
-        android:text="Don't have an account? Sign up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/savePasswordEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

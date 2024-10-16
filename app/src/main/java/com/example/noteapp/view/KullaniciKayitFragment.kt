@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.example.noteapp.R
 import com.example.noteapp.databinding.FragmentKullaniciBinding
+import com.example.noteapp.databinding.FragmentKullaniciKayitBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class KullaniciFragment : Fragment() {
-    private var _binding: FragmentKullaniciBinding? = null
+class KullaniciKayitFragment : Fragment() {
+
+    private var _binding: FragmentKullaniciKayitBinding? = null
     private val binding get() = _binding!!
 
     //Firebase auth
@@ -28,57 +31,52 @@ class KullaniciFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentKullaniciBinding.inflate(inflater, container, false)
+        _binding = FragmentKullaniciKayitBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loginButton.setOnClickListener {
-            girisYap(it)
-        }
-        binding.signUpText.setOnClickListener {
-            val action =
-                KullaniciFragmentDirections.actionKullaniciFragmentToKullaniciKayitFragment()
-            Navigation.findNavController(requireView()).navigate(action)
-        }
+        binding.signUpButton.setOnClickListener {
+            kayitOl(it)
 
-        val guncelKullanici = auth.currentUser
-        if (guncelKullanici != null) {
-            val action =
-                KullaniciFragmentDirections.actionKullaniciFragmentToNotesFragment()
-            Navigation.findNavController(requireView()).navigate(action)
         }
 
     }
 
-    fun girisYap(view: View) {
-        val email = binding.emailEditText.text.toString()
-        val password = binding.passwordEditText.text.toString()
+
+    fun kayitOl(view: View) {
+
+        val email = binding.saveEmailEditText.text.toString()
+        val password = binding.savePasswordEditText.text.toString()
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(requireContext(), "Login Successfull", Toast.LENGTH_LONG).show()
+                    //kullanici olusturuldu
+                    Toast.makeText(requireContext(), "New User Added", Toast.LENGTH_LONG).show()
                     val action =
-                        KullaniciFragmentDirections.actionKullaniciFragmentToNotesFragment()
+                        KullaniciKayitFragmentDirections.actionKullaniciKayitFragmentToNotesFragment()
                     Navigation.findNavController(requireView()).navigate(action)
                 }
+
             }.addOnFailureListener { exception ->
                 Toast.makeText(requireContext(), exception.localizedMessage, Toast.LENGTH_LONG)
                     .show()
             }
         }
 
-    }
 
+    }
 
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 
 }

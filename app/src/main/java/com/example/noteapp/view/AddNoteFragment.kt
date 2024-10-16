@@ -55,7 +55,7 @@ class AddNoteFragment : Fragment() {
 
     fun notKayitIslemi(view: View) {
 
-        val uuid = UUID.randomUUID()
+
 
         val noteTitle = binding.addNoteTitleEditText.text.toString()
         val noteContent = binding.addNoteContentEditText.text.toString()
@@ -66,7 +66,6 @@ class AddNoteFragment : Fragment() {
             notePostMap.put("content", noteContent)
             notePostMap.put("email", auth.currentUser!!.email.toString())
             notePostMap.put("date", Timestamp.now())
-            notePostMap.put("id", uuid)
 
             db.collection("Notes").add(notePostMap).addOnSuccessListener { documentReference ->
                 //veri database e yuklendi
